@@ -12,11 +12,11 @@ Track your journey through the Go backend patterns repository.
 ## 📊 Overall Progress
 
 ```
-Phase 1: Foundation          ░░░░░░░░░░ 0/6  (0%)
-Phase 2: Scaling             ░░░░░░░░░░ 0/9  (0%)
-Phase 3: Reliability         ░░░░░░░░░░ 0/10 (0%)
+Phase 1: Foundation          ░░░░░░░░░░ 0/7  (0%)
+Phase 2: Scaling             ░░░░░░░░░░ 0/10 (0%)
+Phase 3: Reliability         ░░░░░░░░░░ 0/11 (0%)
 ───────────────────────────────────────────
-Total Progress               ░░░░░░░░░░ 0/25 (0%)
+Total Progress               ░░░░░░░░░░ 0/28 (0%)
 ```
 
 ---
@@ -27,31 +27,34 @@ Building standalone, reusable components.
 
 ### Week 1
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 01 | `auth-jwt-basics` | 🔲 Not Started | - | - | Registration, login, JWT tokens |
-| 02 | `auth-jwt-hardened` | 🔲 Not Started | - | - | Token rotation, blacklisting |
+| #   | Project             | Framework | Status         | Started | Completed | Notes                           |
+| --- | ------------------- | --------- | -------------- | ------- | --------- | ------------------------------- |
+| 01  | `auth-jwt-basics`   | Fiber     | 🔲 Not Started | -       | -         | Registration, login, JWT tokens |
+| 02  | `auth-jwt-hardened` | Fiber     | 🔲 Not Started | -       | -         | Token rotation, blacklisting    |
 
 ### Week 2
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 03 | `rbac-permissions` | 🔲 Not Started | - | - | Roles, permissions, access control |
-| 04 | `smtp-otp-verification` | 🔲 Not Started | - | - | Email sending, OTP validation |
+| #   | Project                 | Framework | Status         | Started | Completed | Notes                              |
+| --- | ----------------------- | --------- | -------------- | ------- | --------- | ---------------------------------- |
+| 03  | `rbac-permissions`      | Fiber     | 🔲 Not Started | -       | -         | Roles, permissions, access control |
+| 04  | `smtp-otp-verification` | Fiber     | 🔲 Not Started | -       | -         | Email sending, OTP validation      |
 
 ### Week 3-4
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 05 | `file-upload-storage` | 🔲 Not Started | - | - | Multipart uploads, S3 integration |
-| 06 | `api-integration-ai` | 🔲 Not Started | - | - | External APIs, streaming responses |
+| #   | Project               | Framework | Status         | Started | Completed | Notes                                                    |
+| --- | --------------------- | --------- | -------------- | ------- | --------- | -------------------------------------------------------- |
+| 05  | `file-upload-storage` | Fiber     | 🔲 Not Started | -       | -         | Multipart uploads, S3 integration                        |
+| 06  | `api-integration-ai`  | Fiber     | 🔲 Not Started | -       | -         | External APIs, streaming responses                       |
+| 06b | `auth-jwt-basics-gin` | **Gin**   | 🔲 Not Started | -       | -         | **Port project 01 to Gin - Learn framework portability** |
 
 **Phase 1 Checkpoint:**
+
 - [ ] Can build REST API from scratch
 - [ ] Understand layered architecture
 - [ ] Comfortable with GORM and Fiber
 - [ ] Can implement auth without looking up basics
 - [ ] Have 3-4 reusable modules
+- [ ] **Understand framework-agnostic patterns (built same project in 2 frameworks)**
 
 ---
 
@@ -61,34 +64,37 @@ Applying modules while learning distributed systems.
 
 ### Read Scaling (Weeks 5-6)
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 07 | `caching-strategies` | 🔲 Not Started | - | - | Redis, cache-aside, invalidation |
-| 08 | `database-replication` | 🔲 Not Started | - | - | Master-slave, read replicas |
-| 09 | `indexing-performance` | 🔲 Not Started | - | - | Query optimization, explain plans |
+| #   | Project                | Status         | Started | Completed | Notes                             |
+| --- | ---------------------- | -------------- | ------- | --------- | --------------------------------- |
+| 07  | `caching-strategies`   | 🔲 Not Started | -       | -         | Redis, cache-aside, invalidation  |
+| 08  | `database-replication` | 🔲 Not Started | -       | -         | Master-slave, read replicas       |
+| 09  | `indexing-performance` | 🔲 Not Started | -       | -         | Query optimization, explain plans |
 
 ### Write Scaling (Weeks 7-8)
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 10 | `async-writes-queue` | 🔲 Not Started | - | - | Message queues, background jobs |
-| 11 | `batch-processing` | 🔲 Not Started | - | - | Bulk operations, batching |
-| 12 | `database-sharding` | 🔲 Not Started | - | - | Horizontal partitioning |
+| #   | Project              | Status         | Started | Completed | Notes                           |
+| --- | -------------------- | -------------- | ------- | --------- | ------------------------------- |
+| 10  | `async-writes-queue` | 🔲 Not Started | -       | -         | Message queues, background jobs |
+| 11  | `batch-processing`   | 🔲 Not Started | -       | -         | Bulk operations, batching       |
+| 12  | `database-sharding`  | 🔲 Not Started | -       | -         | Horizontal partitioning         |
 
 ### Real-Time Communication (Weeks 9-10)
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 13 | `websockets-realtime` | 🔲 Not Started | - | - | WebSocket connections, pub/sub |
-| 14 | `sse-notifications` | 🔲 Not Started | - | - | Server-Sent Events |
-| 15 | `long-polling` | 🔲 Not Started | - | - | Long polling implementation |
+| #   | Project                   | Framework | Status         | Started | Completed | Notes                                                   |
+| --- | ------------------------- | --------- | -------------- | ------- | --------- | ------------------------------------------------------- |
+| 13  | `websockets-realtime`     | Fiber     | 🔲 Not Started | -       | -         | WebSocket connections, pub/sub                          |
+| 14  | `sse-notifications`       | Fiber     | 🔲 Not Started | -       | -         | Server-Sent Events                                      |
+| 15  | `long-polling`            | Fiber     | 🔲 Not Started | -       | -         | Long polling implementation                             |
+| 15b | `websockets-realtime-gin` | **Gin**   | 🔲 Not Started | -       | -         | **Port project 13 to Gin - Compare real-time handling** |
 
 **Phase 2 Checkpoint:**
+
 - [ ] Understand CAP theorem through implementation
 - [ ] Can design for read-heavy workloads
 - [ ] Can design for write-heavy workloads
 - [ ] Understand caching tradeoffs
 - [ ] Implemented real-time features
+- [ ] **See how WebSockets work across frameworks**
 
 ---
 
@@ -96,35 +102,38 @@ Applying modules while learning distributed systems.
 
 ### Resilience Patterns (Weeks 11-12)
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 16 | `retry-patterns` | 🔲 Not Started | - | - | Exponential backoff, jitter |
-| 17 | `circuit-breaker` | 🔲 Not Started | - | - | Failure detection, fallbacks |
-| 18 | `idempotency` | 🔲 Not Started | - | - | Idempotent endpoints |
-| 19 | `self-healing` | 🔲 Not Started | - | - | Health checks, graceful degradation |
+| #   | Project           | Status         | Started | Completed | Notes                               |
+| --- | ----------------- | -------------- | ------- | --------- | ----------------------------------- |
+| 16  | `retry-patterns`  | 🔲 Not Started | -       | -         | Exponential backoff, jitter         |
+| 17  | `circuit-breaker` | 🔲 Not Started | -       | -         | Failure detection, fallbacks        |
+| 18  | `idempotency`     | 🔲 Not Started | -       | -         | Idempotent endpoints                |
+| 19  | `self-healing`    | 🔲 Not Started | -       | -         | Health checks, graceful degradation |
 
 ### Long-Running Processes (Weeks 13-14)
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 20 | `message-queues` | 🔲 Not Started | - | - | RabbitMQ/NATS patterns |
-| 21 | `worker-pools` | 🔲 Not Started | - | - | Goroutines, concurrency |
-| 22 | `workflow-engine` | 🔲 Not Started | - | - | Temporal/Cadence, saga pattern |
+| #   | Project           | Status         | Started | Completed | Notes                          |
+| --- | ----------------- | -------------- | ------- | --------- | ------------------------------ |
+| 20  | `message-queues`  | 🔲 Not Started | -       | -         | RabbitMQ/NATS patterns         |
+| 21  | `worker-pools`    | 🔲 Not Started | -       | -         | Goroutines, concurrency        |
+| 22  | `workflow-engine` | 🔲 Not Started | -       | -         | Temporal/Cadence, saga pattern |
 
 ### Advanced Architecture (Weeks 15-16)
 
-| # | Project | Status | Started | Completed | Notes |
-|---|---------|--------|---------|-----------|-------|
-| 23 | `cqrs-pattern` | 🔲 Not Started | - | - | Command/Query separation |
-| 24 | `microservices-basic` | 🔲 Not Started | - | - | Service communication |
-| 25 | `production-api` | 🔲 Not Started | - | - | **CAPSTONE**: Everything combined |
+| #   | Project                | Framework | Status         | Started | Completed | Notes                                             |
+| --- | ---------------------- | --------- | -------------- | ------- | --------- | ------------------------------------------------- |
+| 23  | `cqrs-pattern`         | Fiber     | 🔲 Not Started | -       | -         | Command/Query separation                          |
+| 24  | `microservices-basic`  | Mixed     | 🔲 Not Started | -       | -         | Service communication                             |
+| 25  | `production-api-fiber` | **Fiber** | 🔲 Not Started | -       | -         | **CAPSTONE (Fiber)**: Everything combined         |
+| 25b | `production-api-gin`   | **Gin**   | 🔲 Not Started | -       | -         | **CAPSTONE (Gin)**: Same app, different framework |
 
 **Phase 3 Checkpoint:**
+
 - [ ] Can design resilient systems
 - [ ] Understand distributed systems patterns
 - [ ] Can identify failure modes
 - [ ] Know when to use advanced patterns
 - [ ] Built full production-ready system
+- [ ] **Demonstrated framework mastery with dual capstones**
 
 ---
 
@@ -187,12 +196,15 @@ Applying modules while learning distributed systems.
 ### Week [Number]: [Date Range]
 
 **Projects Started:**
+
 - Project name
 
 **Projects Completed:**
+
 - Project name
 
 **Key Learnings:**
+
 - What did you learn this week?
 - What challenges did you face?
 - What clicked for you?
@@ -200,6 +212,7 @@ Applying modules while learning distributed systems.
 **Time Spent:** [hours]
 
 **Next Week Goals:**
+
 - Goal 1
 - Goal 2
 
@@ -223,9 +236,10 @@ Applying modules while learning distributed systems.
 ## 📊 Statistics
 
 **Total Time Invested:** 0 hours  
-**Projects Completed:** 0 / 25  
+**Projects Completed:** 0 / 28  
 **Modules Created:** 0  
 **Lines of Go Code Written:** 0  
+**Frameworks Mastered:** 0 / 2 (Fiber, Gin)  
 **Issues Encountered & Solved:** 0  
 **GitHub Stars (if public):** 0
 
@@ -234,24 +248,28 @@ Applying modules while learning distributed systems.
 ## 🎯 Monthly Goals
 
 ### Month 1 (Weeks 1-4)
+
 - [ ] Complete Phase 1 (Foundation)
 - [ ] Create 4 reusable modules
 - [ ] Comfortable with Go syntax
 - [ ] Can build REST API independently
 
 ### Month 2 (Weeks 5-8)
+
 - [ ] Learn caching patterns
 - [ ] Implement database replication
 - [ ] Build async processing system
 - [ ] Start understanding distributed systems
 
 ### Month 3 (Weeks 9-12)
+
 - [ ] Implement real-time features
 - [ ] Add resilience patterns
 - [ ] Handle failures gracefully
 - [ ] Build message queue systems
 
 ### Month 4 (Weeks 13-16)
+
 - [ ] Complete all projects
 - [ ] Build capstone project
 - [ ] Solidify system design knowledge
@@ -264,21 +282,25 @@ Applying modules while learning distributed systems.
 After each phase, reflect on:
 
 ### What Went Well?
+
 - Successes
 - Smooth implementations
 - Quick understanding
 
 ### What Was Challenging?
+
 - Difficult concepts
 - Time-consuming tasks
 - Confusing patterns
 
 ### What Would You Do Differently?
+
 - Alternative approaches
 - Better strategies
 - Time management
 
 ### Key Takeaways
+
 - Most important lessons
 - Unexpected insights
 - Skills gained
@@ -290,16 +312,19 @@ After each phase, reflect on:
 ### Update [Date]
 
 **Current Status:**
+
 - Phase: X
 - Project: Y
 - Completion: Z%
 
 **This Week:**
+
 - Completed: [projects]
 - Learning highlights: [key lessons]
 - Challenges faced: [obstacles]
 
 **Next Week:**
+
 - Starting: [projects]
 - Focus areas: [topics]
 
