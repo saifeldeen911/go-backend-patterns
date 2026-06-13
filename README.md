@@ -4,7 +4,7 @@ A comprehensive learning repository demonstrating production-ready Go backend pa
 
 ## 🎯 Mission
 
-Learn Go/Fiber backend development and system design by **building real-world projects** with reusable, production-grade modules. No tutorials, no hello world—just practical, composable systems.
+Learn Go backend development and system design by **building real-world projects** with reusable, production-grade modules. Start from `net/http`, then use Fiber v3 and selected Gin ports to understand framework adapters. No tutorials, no hello world—just practical, composable systems.
 
 ## 🏗 Repository Structure
 
@@ -26,9 +26,10 @@ go-backend-patterns/
 │   └── audit-log/              # Activity tracking
 │
 ├── projects/                    # Learning projects by phase
-│   ├── phase-1-foundation/     # Weeks 1-4: Core modules
-│   ├── phase-2-scaling/        # Weeks 5-10: Read/write scaling
-│   └── phase-3-reliability/    # Weeks 11-16: Resilience patterns
+│   ├── phase-0-fundamentals/   # Weeks 0-2: Go backend fundamentals
+│   ├── phase-1-foundation/     # Weeks 3-6: Core modules
+│   ├── phase-2-scaling/        # Weeks 7-12: Read/write scaling
+│   └── phase-3-reliability/    # Weeks 13-18: Resilience patterns
 │
 └── examples/                    # Complete reference implementations
     ├── production-api-fiber/    # Full-stack using Fiber
@@ -37,7 +38,21 @@ go-backend-patterns/
 
 ## 📚 Learning Path
 
-### **Phase 1: Foundation Modules** (Weeks 1-4)
+### **Phase 0: Go Backend Fundamentals** (Weeks 0-2)
+
+Build small but complete backend labs before adding framework and distributed-systems complexity:
+
+| #   | Project                         | Concepts Learned                                             | Status         |
+| --- | ------------------------------- | ------------------------------------------------------------ | -------------- |
+| 00a | `net-http-json-api`             | `net/http`, routing, JSON, status codes, request lifecycle   | 🔲 Not Started |
+| 00b | `context-errors-config`         | `context.Context`, cancellation, error wrapping, env config  | 🔲 Not Started |
+| 00c | `sql-migrations-transactions`   | PostgreSQL, `database/sql`, migrations, transactions         | 🔲 Not Started |
+| 00d | `testing-benchmarking`          | Unit tests, integration tests, table tests, benchmarks       | 🔲 Not Started |
+| 00e | `docker-observability-shutdown` | Docker Compose, structured logs, health checks, graceful stop | 🔲 Not Started |
+
+Phase 0 is not meant to slow the roadmap down. It creates a baseline so the advanced projects teach real engineering tradeoffs instead of framework syntax and setup friction.
+
+### **Phase 1: Foundation Modules** (Weeks 3-6)
 
 Build standalone, reusable components:
 
@@ -50,7 +65,7 @@ Build standalone, reusable components:
 | 05  | `file-upload-storage`   | Multipart uploads, S3 integration, validation | 🔲 Not Started |
 | 06  | `api-integration-ai`    | External APIs (Groq/OpenRouter), streaming    | 🔲 Not Started |
 
-### **Phase 2: Scaling Patterns** (Weeks 5-10)
+### **Phase 2: Scaling Patterns** (Weeks 7-12)
 
 Apply modules while learning distributed systems:
 
@@ -59,7 +74,7 @@ Apply modules while learning distributed systems:
 | #   | Project                | Concepts                             | Status         |
 | --- | ---------------------- | ------------------------------------ | -------------- |
 | 07  | `caching-strategies`   | Redis, cache-aside, invalidation     | 🔲 Not Started |
-| 08  | `database-replication` | Master-slave, read replicas, pooling | 🔲 Not Started |
+| 08  | `database-replication` | Primary-replica replication, read replicas, pooling | 🔲 Not Started |
 | 09  | `indexing-performance` | Query optimization, explain plans    | 🔲 Not Started |
 
 #### Write Scaling
@@ -79,7 +94,7 @@ Apply modules while learning distributed systems:
 | 15  | `long-polling`            | Long polling vs WebSockets/SSE                   | Fiber     | 🔲 Not Started |
 | 15b | `websockets-realtime-gin` | **Same as 13 but with Gin** - Compare frameworks | Gin       | 🔲 Not Started |
 
-### **Phase 3: Reliability & Advanced Patterns** (Weeks 11-16)
+### **Phase 3: Reliability & Advanced Patterns** (Weeks 13-18)
 
 #### Resilience
 
@@ -96,14 +111,14 @@ Apply modules while learning distributed systems:
 | --- | ----------------- | -------------------------------------- | -------------- |
 | 20  | `message-queues`  | RabbitMQ/NATS, dead letter queues      | 🔲 Not Started |
 | 21  | `worker-pools`    | Goroutines, concurrency, resource mgmt | 🔲 Not Started |
-| 22  | `workflow-engine` | Temporal/Cadence, saga pattern         | 🔲 Not Started |
+| 22  | `workflow-engine` | Temporal-style durable workflows, saga pattern | 🔲 Not Started |
 
 #### Advanced Architecture
 
 | #   | Project                | Concepts                                       | Framework | Status         |
 | --- | ---------------------- | ---------------------------------------------- | --------- | -------------- |
 | 23  | `cqrs-pattern`         | Command/Query separation, event sourcing       | Fiber     | 🔲 Not Started |
-| 24  | `microservices-basic`  | Service mesh, inter-service communication      | Mixed     | 🔲 Not Started |
+| 24  | `microservices-basic`  | Service boundaries, inter-service communication, optional service mesh concepts | Mixed     | 🔲 Not Started |
 | 25  | `production-api-fiber` | **Capstone with Fiber**: All patterns combined | Fiber     | 🔲 Not Started |
 | 25b | `production-api-gin`   | **Capstone with Gin**: Demonstrate portability | Gin       | 🔲 Not Started |
 
@@ -111,7 +126,7 @@ Apply modules while learning distributed systems:
 
 ### Prerequisites
 
-- Go 1.21+
+- Go latest stable (Go 1.26+ as of June 2026)
 - Docker & Docker Compose
 - PostgreSQL (via Docker)
 - Redis (via Docker)
@@ -121,7 +136,7 @@ Apply modules while learning distributed systems:
 
 ```bash
 # Navigate to project
-cd projects/phase-1-foundation/01-auth-jwt-basics
+cd projects/phase-0-fundamentals/00a-net-http-json-api
 
 # Copy environment variables
 cp .env.example .env
@@ -152,7 +167,8 @@ This repo is built on **learning by doing**:
 
 - No step-by-step tutorials
 - No copy-paste solutions
-- Real-world complexity from day one
+- Realistic backend work from day one
+- Advanced topics are kept intentionally, but built on explicit fundamentals
 - AI-assisted learning (see `AI_RULES.md`)
 
 ### How to Learn from Each Project
@@ -172,7 +188,13 @@ See `AI_RULES.md` for guidelines on how to use GitHub Copilot or other AI tools 
 
 ### Backend Fundamentals
 
+- `net/http` request lifecycle
+- Context cancellation and timeouts
+- Error wrapping and typed errors
+- Environment-based configuration
 - RESTful API design
+- Testing and benchmarking
+- Graceful shutdown
 - Authentication & Authorization (JWT, RBAC)
 - Input validation & error handling
 - File uploads & storage
@@ -183,6 +205,7 @@ See `AI_RULES.md` for guidelines on how to use GitHub Copilot or other AI tools 
 ### Database & Persistence
 
 - GORM (ORM for Go)
+- GORM context usage, transaction blocks, and Generics API awareness
 - PostgreSQL (relational database)
 - Migrations & schema management
 - Indexing & query optimization
@@ -240,22 +263,22 @@ See `AI_RULES.md` for guidelines on how to use GitHub Copilot or other AI tools 
 
 ### Core
 
-- **Language**: Go 1.21+
-- **Web Framework**: Fiber v2 (primary) / Gin (alternative implementations)
-- **ORM**: GORM v2
-- **Database**: PostgreSQL 15+
-- **Cache**: Redis 7+
+- **Language**: Go latest stable (Go 1.26+ as of June 2026)
+- **Web Framework**: Fiber v3 (primary) / Gin (alternative implementations)
+- **ORM**: GORM v2, including awareness of the newer Generics API
+- **Database**: PostgreSQL 18+ recommended (15+ still fine for compatibility labs)
+- **Cache**: Redis 8+ recommended
 
-> **Framework Philosophy**: We primarily use **Fiber** for learning because of its Express-like API and excellent documentation. However, the patterns you learn (handlers, services, repositories, middleware) are **framework-agnostic**. Selected projects include **Gin implementations** to demonstrate portability. The goal is understanding backend patterns, not framework lock-in.
+> **Framework Philosophy**: We primarily use **Fiber** for learning because of its Express-like API and strong documentation. Current Fiber examples should target **Fiber v3** unless a project explicitly says it is a legacy v2 comparison. The patterns you learn (handlers, services, repositories, middleware) are portable, but framework adapters are not identical: Fiber is built around `fasthttp`, while Gin builds on the standard `net/http` ecosystem. Selected projects include **Gin implementations** to demonstrate portability without pretending the frameworks are interchangeable.
 
 ### Additional Libraries
 
-- JWT: `golang-jwt/jwt`
-- Validation: `go-playground/validator`
+- JWT: `golang-jwt/jwt/v5`
+- Validation: `go-playground/validator/v10`
 - Environment: `godotenv`
 - Password Hashing: `bcrypt`
 - UUID: `google/uuid`
-- Circuit Breaker: `sony/gobreaker`
+- Circuit Breaker: `sony/gobreaker/v2`
 
 ### Infrastructure
 
@@ -326,6 +349,6 @@ Track your journey in `ROADMAP.md` - update status as you complete each project.
 
 ---
 
-**Start with Project 01 and build your way up. Each project compounds on the previous ones.**
+**Start with Phase 0, then build your way up. Each project compounds on the previous ones.**
 
 Happy learning! 🚀

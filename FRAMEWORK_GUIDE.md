@@ -6,8 +6,8 @@ Understanding Go web frameworks and why patterns matter more than syntax.
 
 ### The Reality
 
-- **Fiber**: Fastest, Express-like API, great docs, growing adoption
-- **Gin**: Most popular, industry standard, more job postings globally
+- **Fiber**: Express-inspired API, strong docs, high-performance design, now with v3 APIs that differ from older v2 examples
+- **Gin**: Mature, widely used, `net/http`-based ecosystem, strong docs and middleware support
 - **Echo, Chi, net/http**: Also used in production
 
 ### Your Strategy
@@ -26,19 +26,19 @@ Understanding Go web frameworks and why patterns matter more than syntax.
 - Repository pattern
 - Service layer design
 
-**These patterns are identical across frameworks. Only the syntax changes.**
+These patterns transfer across frameworks, but the adapters are not identical. Fiber is built around `fasthttp`, while Gin builds on the standard `net/http` request model. That affects middleware integration, request context handling, and some third-party library compatibility.
 
 ---
 
 ## 📊 Framework Comparison
 
-### Quick Stats
+### Practical Comparison
 
 | Feature                 | Fiber             | Gin                | Note                   |
 | ----------------------- | ----------------- | ------------------ | ---------------------- |
-| **Performance**         | ⚡⚡⚡ Fastest    | ⚡⚡ Fast          | Both production-ready  |
-| **Popularity (GitHub)** | 33k stars         | 78k stars          | Gin more established   |
-| **Job Market**          | Growing           | Dominant           | Gin has more jobs      |
+| **Performance**         | Very fast         | Very fast          | Benchmark gaps rarely matter before architecture, DB, and IO |
+| **Ecosystem fit**       | `fasthttp`-based  | `net/http`-based   | Gin usually integrates more directly with standard Go HTTP tooling |
+| **Adoption**            | Growing           | More established   | Verify job-market signals locally when this matters |
 | **Learning Curve**      | Easy              | Easy               | Both beginner-friendly |
 | **Documentation**       | Excellent         | Excellent          | Both well-documented   |
 | **API Style**           | Express.js-like   | Simple & idiomatic | Both clean             |
@@ -49,14 +49,14 @@ Understanding Go web frameworks and why patterns matter more than syntax.
 **Use Fiber when:**
 
 - Building new projects (greenfield)
-- Performance is critical
+- You want an Express-inspired API and are comfortable with Fiber's `fasthttp` foundation
 - You like Express.js-style API
 - Working on personal/startup projects
 
 **Use Gin when:**
 
-- Joining existing teams (higher chance it's Gin)
-- Maximizing job opportunities
+- Joining existing teams that already use Gin or standard `net/http` middleware
+- Maximizing compatibility with the standard Go HTTP ecosystem
 - Contributing to popular projects
 - Enterprise environments
 
@@ -73,12 +73,12 @@ Understanding Go web frameworks and why patterns matter more than syntax.
 ```go
 package main
 
-import "github.com/gofiber/fiber/v2"
+import "github.com/gofiber/fiber/v3"
 
 func main() {
     app := fiber.New()
 
-    app.Get("/", func(c *fiber.Ctx) error {
+    app.Get("/", func(c fiber.Ctx) error {
         return c.JSON(fiber.Map{
             "message": "Hello from Fiber",
         })
@@ -110,9 +110,11 @@ func main() {
 
 **Key Differences:**
 
-- Fiber uses `c *fiber.Ctx`, Gin uses `c *gin.Context`
+- Fiber v3 uses `c fiber.Ctx`, Gin uses `c *gin.Context`
 - Fiber: `c.JSON()`, Gin: `c.JSON(statusCode, data)`
 - Fiber: `app.Listen()`, Gin: `app.Run()`
+
+> Version note: older Fiber v2 examples use `github.com/gofiber/fiber/v2`, `func(c *fiber.Ctx)`, and `c.BodyParser(&req)`. Current Fiber v3 examples use `github.com/gofiber/fiber/v3`, `func(c fiber.Ctx)`, and `c.Bind().Body(&req)`.
 
 ---
 
@@ -126,11 +128,11 @@ type RegisterRequest struct {
     Password string `json:"password" validate:"required,min=8"`
 }
 
-func Register(c *fiber.Ctx) error {
+func Register(c fiber.Ctx) error {
     var req RegisterRequest
 
     // Parse body
-    if err := c.BodyParser(&req); err != nil {
+    if err := c.Bind().Body(&req); err != nil {
         return c.Status(400).JSON(fiber.Map{
             "error": "Invalid request body",
         })
@@ -178,7 +180,7 @@ func Register(c *gin.Context) {
 **Key Differences:**
 
 - Fiber: `validate` tag, Gin: `binding` tag
-- Fiber: `c.BodyParser()`, Gin: `c.ShouldBindJSON()`
+- Fiber v3: `c.Bind().Body()`, Gin: `c.ShouldBindJSON()`
 - Fiber: `c.Params()`, Gin: `c.Param()`
 - Fiber: `c.Query()`, Gin: `c.DefaultQuery()` or `c.Query()`
 - Fiber returns errors, Gin uses explicit returns
@@ -190,7 +192,7 @@ func Register(c *gin.Context) {
 #### Fiber
 
 ```go
-func AuthMiddleware(c *fiber.Ctx) error {
+func AuthMiddleware(c fiber.Ctx) error {
     token := c.Get("Authorization")
 
     if token == "" {
@@ -211,7 +213,7 @@ func AuthMiddleware(c *fiber.Ctx) error {
 
 // Usage
 app.Use(AuthMiddleware)
-app.Get("/protected", func(c *fiber.Ctx) error {
+app.Get("/protected", func(c fiber.Ctx) error {
     userID := c.Locals("userID").(int)
     return c.JSON(fiber.Map{"user_id": userID})
 })
@@ -316,13 +318,13 @@ protected.Use(middleware.Auth())
 
 ### Handler → Service → Repository
 
-This architecture is **identical** regardless of framework:
+This architecture is **mostly reusable** regardless of framework:
 
 ```go
 // handlers/user_handler.go (Framework-specific)
 
 // FIBER VERSION
-func (h *UserHandler) GetProfile(c *fiber.Ctx) error {
+func (h *UserHandler) GetProfile(c fiber.Ctx) error {
     userID := c.Locals("userID").(uint)
 
     user, err := h.userService.GetByID(c.Context(), userID)
@@ -389,7 +391,7 @@ func (r *userRepository) FindByID(ctx context.Context, id uint) (*models.User, e
 }
 ```
 
-**See?** Only the handler layer changes. **90% of your code is framework-agnostic!**
+**See?** Most service, repository, model, and DTO code can stay framework-agnostic. The HTTP adapter layer still deserves careful framework-specific attention.
 
 ---
 
@@ -408,7 +410,7 @@ func (r *userRepository) FindByID(ctx context.Context, id uint) (*models.User, e
 - After completing `auth-jwt-basics` in Fiber
 - Rebuild the SAME project in Gin
 - See how patterns translate
-- Realize: "Oh, it's just syntax changes!"
+- Notice what is portable and what is framework-specific
 
 ### Phase 2: Understand Portability
 
@@ -451,7 +453,7 @@ func (r *userRepository) FindByID(ctx context.Context, id uint) (*models.User, e
 
 - "I've built production systems in both Fiber and Gin"
 - Interviewer: "Interesting, what's your take on both?"
-- You: "Both are excellent. The patterns are identical - handler/service/repository layers. I can work with either, or Echo, Chi, net/http... they're all the same architectural patterns with different syntax."
+- You: "Both are solid. The core architecture transfers - handlers, services, repositories, DTOs - but the HTTP adapter details differ. I can work with either, and I know what to check when moving between Fiber, Gin, Echo, Chi, or net/http."
 
 **This demonstrates:**
 
@@ -468,8 +470,8 @@ Quick reference for moving between frameworks:
 
 | Task                | Fiber                    | Gin                            |
 | ------------------- | ------------------------ | ------------------------------ |
-| **Context**         | `c *fiber.Ctx`           | `c *gin.Context`               |
-| **Parse JSON**      | `c.BodyParser(&req)`     | `c.ShouldBindJSON(&req)`       |
+| **Context**         | `c fiber.Ctx`            | `c *gin.Context`               |
+| **Parse JSON**      | `c.Bind().Body(&req)`    | `c.ShouldBindJSON(&req)`       |
 | **Path param**      | `c.Params("id")`         | `c.Param("id")`                |
 | **Query param**     | `c.Query("page")`        | `c.Query("page")`              |
 | **Get header**      | `c.Get("Authorization")` | `c.GetHeader("Authorization")` |
@@ -479,7 +481,7 @@ Quick reference for moving between frameworks:
 | **Get data**        | `c.Locals("key")`        | `c.Get("key")`                 |
 | **Stop chain**      | `return error`           | `c.Abort()`                    |
 | **Continue**        | `c.Next()`               | `c.Next()`                     |
-| **Request context** | `c.Context()`            | `c.Request.Context()`          |
+| **Request context** | Fiber v3 `Ctx` implements `context.Context`; verify v2 projects separately | `c.Request.Context()` |
 
 ---
 
@@ -501,7 +503,7 @@ Quick reference for moving between frameworks:
 - Any language (Node.js/Express, Python/Flask, Ruby/Rails)
 - Any backend system
 
-The framework is just syntax. The patterns are what matter.
+The framework is an adapter around your backend design. The patterns matter most, but the adapter details still matter.
 
 ---
 
@@ -515,12 +517,13 @@ The framework is just syntax. The patterns are what matter.
 
 ## ✅ Your Action Items
 
-- [ ] Build first 6 projects in Fiber (learn patterns)
+- [ ] Complete Phase 0 with `net/http` first
+- [ ] Build first 6 framework projects in Fiber v3 (learn patterns)
 - [ ] Rebuild project 01 in Gin (see portability)
 - [ ] Continue Phase 2 in Fiber (focus on scaling patterns)
 - [ ] Rebuild project 13 in Gin (WebSockets comparison)
 - [ ] Build both capstone projects (demonstrate mastery)
-- [ ] Update resume: "Production Go backends with Fiber & Gin"
+- [ ] Update resume: "Go backend projects with Fiber v3, Gin, and net/http"
 - [ ] In interviews: Emphasize pattern knowledge over framework preference
 
 **Remember: Frameworks come and go. Patterns are forever.** 🚀

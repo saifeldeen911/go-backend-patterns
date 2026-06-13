@@ -44,37 +44,45 @@ Master Go backend development and distributed systems design through **practical
 
 ### Core Principles
 
-#### 1. Real-World Complexity from Day One
+#### 1. Realistic Backend Work from Day One
 
 - No toy examples or oversimplified demos
-- Every project should be production-grade in structure
+- Every project should exercise real backend concerns
 - Implement proper error handling, validation, and security from the start
 - Use realistic scenarios (auth systems, not "todo apps")
 
-#### 2. Build Reusable Modules
+#### 2. Fundamentals Before Framework Dependence
+
+- Start with `net/http`, `context`, `database/sql`, testing, Docker, and graceful shutdown
+- Learn what frameworks are wrapping before depending on Fiber or Gin
+- Make request lifecycle, cancellation, errors, and tests automatic
+- Keep the fundamentals track short and practical, not academic
+
+#### 3. Build Reusable Modules
 
 - Each foundational project becomes a reusable package
 - Modules should be importable in future projects
 - Design for composition, not duplication
 - Example: Build auth once, use it in 5+ projects
 
-#### 3. Framework-Agnostic Patterns
+#### 4. Framework-Agnostic Patterns
 
-- **Primary framework: Fiber** (Express-like, beginner-friendly, fast)
-- **Alternative implementations: Gin** (more popular, industry standard)
+- **Primary framework: Fiber v3** (Express-inspired, beginner-friendly, fast)
+- **Alternative implementations: Gin** (mature, widely used, `net/http`-based)
 - Focus on **patterns** (handler/service/repository) that work in ANY framework
 - Learn: "This is how you structure a backend", not "This is Fiber-specific code"
 - Selected projects reimplemented in Gin to demonstrate portability
 - Goal: Be employable with Gin, Echo, Chi, or any Go web framework
 
-#### 4. Progressive Complexity
+#### 5. Progressive Complexity
 
+- **Phase 0**: Build Go backend fundamentals without framework dependence
 - **Phase 1**: Build individual modules (auth, RBAC, file upload)
 - **Phase 2**: Combine modules + add scaling patterns (caching, replication)
 - **Phase 3**: Add reliability patterns (circuit breakers, retries) + advanced architecture (CQRS)
 - **Capstone**: Full production system using everything (in BOTH Fiber and Gin)
 
-#### 4. Learn System Design Through Implementation
+#### 6. Learn Advanced System Design Through Implementation
 
 Rather than just reading about distributed systems:
 
@@ -83,7 +91,9 @@ Rather than just reading about distributed systems:
 - Create circuit breakers and understand cascading failures
 - Implement CQRS and see when it's overkill vs. necessary
 
-#### 5. Documentation as Learning Tool
+Advanced topics are included intentionally because practical exposure to scalability, reliability, and distributed-systems tradeoffs is what separates theory-only knowledge from strong backend engineering. The goal is not to over-engineer every early project; the goal is to turn concepts you may already know theoretically into working code, failures, measurements, and tradeoff notes.
+
+#### 7. Documentation as Learning Tool
 
 - Write README for each project → forces clear thinking
 - Maintain LEARNINGS.md → capture mistakes and insights
@@ -139,7 +149,40 @@ Rather than just reading about distributed systems:
 
 ## 🎓 Key Learning Objectives by Phase
 
-### Phase 1: Foundation (Weeks 1-4)
+### Phase 0: Go Backend Fundamentals (Weeks 0-2)
+
+**Go HTTP Fundamentals**
+
+- `net/http` routing and handler signatures
+- Request parsing and response writing
+- JSON encoding and decoding
+- Status codes and API error responses
+- Middleware basics without a framework
+
+**Runtime and Reliability Basics**
+
+- `context.Context` cancellation and deadlines
+- Graceful shutdown
+- Timeouts around HTTP and database work
+- Error wrapping, sentinel errors, and domain errors
+- Environment-based configuration
+
+**Database and Testing Basics**
+
+- PostgreSQL with `database/sql`
+- Manual SQL migrations
+- Transactions and rollback behavior
+- Unit tests, table-driven tests, handler tests
+- Integration tests and basic benchmarks
+
+**Local Operations**
+
+- Docker Compose for app dependencies
+- Health checks
+- Structured logging basics
+- Minimal observability habits before advanced systems
+
+### Phase 1: Foundation (Weeks 3-6)
 
 **Go Language Mastery**
 
@@ -151,7 +194,7 @@ Rather than just reading about distributed systems:
 - Goroutines and channels (basics)
 - Package management with Go modules
 
-**Web Development with Fiber**
+**Web Development with Fiber v3**
 
 - Routing and route groups
 - Middleware chains
@@ -183,7 +226,7 @@ Rather than just reading about distributed systems:
 - File upload handling
 - S3/cloud storage integration
 
-### Phase 2: Scaling (Weeks 5-10)
+### Phase 2: Scaling (Weeks 7-12)
 
 **Read Scaling**
 
@@ -218,7 +261,7 @@ Rather than just reading about distributed systems:
 - When to cache, when not to cache
 - Read-heavy vs write-heavy workloads
 
-### Phase 3: Reliability (Weeks 11-16)
+### Phase 3: Reliability (Weeks 13-18)
 
 **Failure Handling**
 
@@ -241,7 +284,7 @@ Rather than just reading about distributed systems:
 - CQRS (Command Query Responsibility Segregation)
 - Event-driven architecture
 - Microservices communication patterns
-- Service mesh concepts
+- Service discovery and inter-service communication; service mesh as an optional advanced layer
 
 **Production Readiness**
 
@@ -294,7 +337,7 @@ Rather than just reading about distributed systems:
 
 ### Portfolio Metrics
 
-- [ ] Have 20+ production-ready Go projects
+- [ ] Have 20+ completed Go projects/labs, with the capstones held to production-ready standards
 - [ ] Have 5+ reusable modules others can use
 - [ ] Have documentation that shows deep understanding
 - [ ] Can walk through any project in an interview
@@ -325,8 +368,8 @@ Rather than just reading about distributed systems:
 ### Current Phase: Setup & Foundation
 
 - Establishing structure
-- Creating initial modules
-- Building first 5-6 projects
+- Creating Phase 0 fundamentals
+- Building the first backend labs and foundation modules
 
 ### Near Future: Scaling & Composition
 
@@ -336,7 +379,7 @@ Rather than just reading about distributed systems:
 
 ### Long Term: Advanced Patterns & Contributions
 
-- CQRS, event sourcing, microservices
+- CQRS, event sourcing, microservices, and durable workflow engines
 - Contributing modules back to community
 - Helping others learn from this approach
 

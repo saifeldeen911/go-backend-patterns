@@ -347,7 +347,7 @@ Always handle errors in examples. Bad habits in learning carry to production."
 
 ### ❌ Anti-Pattern 6: Using Deprecated or Non-Idiomatic Packages
 ```
-❌ Bad: Suggesting old JWT library instead of golang-jwt/jwt
+❌ Bad: Suggesting deprecated or unversioned JWT packages instead of `golang-jwt/jwt/v5`
 
 ✅ Good: "Use `golang-jwt/jwt/v5` (formerly dgrijalva/jwt-go):
 - Actively maintained
@@ -458,7 +458,7 @@ Always handle errors in examples. Bad habits in learning carry to production."
 AI: Here's the code:
 
 ```go
-func AuthMiddleware(c *fiber.Ctx) error {
+func AuthMiddleware(c fiber.Ctx) error {
     token := c.Get("Authorization")
     if token == "" {
         return c.Status(401).JSON(fiber.Map{"error": "unauthorized"})
@@ -484,7 +484,7 @@ Just add this to your main.go.
 AI: Middleware in Fiber is a function that runs before your route handlers. Think of it as a checkpoint that requests pass through.
 
 **Middleware Pattern:**
-- Receives the request context (c *fiber.Ctx)
+- Receives the request context (`c fiber.Ctx` in Fiber v3)
 - Can modify the request/response
 - Must call c.Next() to continue, or return early to stop
 
@@ -498,7 +498,7 @@ AI: Middleware in Fiber is a function that runs before your route handlers. Thin
 
 ```go
 // Middleware function signature
-func AuthMiddleware(c *fiber.Ctx) error {
+func AuthMiddleware(c fiber.Ctx) error {
     // 1. Check for auth token
     token := c.Get("Authorization")
     if token == "" {

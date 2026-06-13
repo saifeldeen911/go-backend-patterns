@@ -19,11 +19,11 @@ What you will learn by building this project:
 
 ## 🛠 Tech Stack
 
-- **Language**: Go 1.21+
-- **Framework**: Fiber v2
-- **Database**: PostgreSQL 15+
-- **ORM**: GORM v2
-- **Cache**: Redis 7+ (if applicable)
+- **Language**: Go latest stable (Go 1.26+ as of June 2026)
+- **Framework**: Fiber v3 by default, or Gin for comparison projects
+- **Database**: PostgreSQL 18+ recommended (15+ acceptable for compatibility labs)
+- **ORM**: GORM v2, with awareness of the Generics API
+- **Cache**: Redis 8+ recommended (if applicable)
 - **Additional**: List any specific libraries used
 
 ## 🏗 Project Structure
@@ -62,7 +62,7 @@ project-name/
 
 ### Prerequisites
 
-- Go 1.21 or higher
+- Go latest stable (Go 1.26+ as of June 2026)
 - Docker and Docker Compose
 - Make (optional)
 
@@ -249,11 +249,23 @@ hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.Defa
 ### 2. JWT Token Generation
 
 ```go
-token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-    "user_id": user.ID,
-    "email":   user.Email,
-    "exp":     time.Now().Add(15 * time.Minute).Unix(),
-})
+type AccessClaims struct {
+    UserID uint   `json:"user_id"`
+    Email  string `json:"email"`
+    jwt.RegisteredClaims
+}
+
+claims := AccessClaims{
+    UserID: user.ID,
+    Email:  user.Email,
+    RegisteredClaims: jwt.RegisteredClaims{
+        Subject:   strconv.FormatUint(uint64(user.ID), 10),
+        ExpiresAt: jwt.NewNumericDate(time.Now().Add(15 * time.Minute)),
+        IssuedAt:  jwt.NewNumericDate(time.Now()),
+    },
+}
+
+token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 ```
 
 **Why JWT?**
@@ -311,6 +323,8 @@ Request → Logger → CORS → Recover → Auth → Handler → Auth → Recove
 - [x] Model definition and migrations
 - [x] CRUD operations
 - [x] Query building
+- [x] Context-aware queries and transaction blocks
+- [x] Awareness of the GORM Generics API (if useful for the project)
 - [x] Associations (if applicable)
 - [x] Transaction handling (if applicable)
 

@@ -2,7 +2,7 @@
 
 This document explains the architectural patterns used across projects, why they exist, and when to use them.
 
-> **Important**: These patterns are **framework-agnostic**. Whether you use Fiber, Gin, Echo, or Chi, the architecture remains the same. Only the HTTP handler syntax changes. This document focuses on patterns that work everywhere.
+> **Important**: These patterns are **framework-agnostic where it matters most**. Services, repositories, DTOs, models, and business rules should transfer across Fiber, Gin, Echo, Chi, or `net/http`. The HTTP adapter layer still changes in real ways, especially because Fiber is `fasthttp`-based while Gin and Chi sit closer to the standard `net/http` ecosystem.
 
 ## 🏗 Project Structure Philosophy
 
@@ -74,7 +74,7 @@ HTTP Request → Handlers → Services → Repository → Database
 - Direct database access
 - Complex validation rules
 
-**Framework note:** This is the ONLY layer that changes between Fiber/Gin/Echo. Everything else is identical.
+**Framework note:** This is the layer that changes the most between Fiber/Gin/Echo. Keep framework-specific context, binding, status-code, and middleware behavior here.
 
 **Example (Fiber):**
 
@@ -83,10 +83,10 @@ type UserHandler struct {
     userService services.UserService
 }
 
-func (h *UserHandler) Register(c *fiber.Ctx) error {
+func (h *UserHandler) Register(c fiber.Ctx) error {
     // 1. Parse request
     var req dto.RegisterRequest
-    if err := c.BodyParser(&req); err != nil {
+    if err := c.Bind().Body(&req); err != nil {
         return c.Status(400).JSON(fiber.Map{"error": "invalid request"})
     }
 
@@ -146,7 +146,7 @@ func (h *UserHandler) Register(c *gin.Context) {
 
 ### 2. Service Pattern
 
-**What it is:** Business logic layer (100% framework-agnostic)
+**What it is:** Business logic layer (should be framework-agnostic)
 
 **Responsibilities:**
 
@@ -161,7 +161,7 @@ func (h *UserHandler) Register(c *gin.Context) {
 - HTTP-specific logic (status codes, headers)
 - Direct SQL queries (use repositories)
 
-**Important:** This layer is IDENTICAL regardless of whether you use Fiber, Gin, Echo, or pure net/http.
+**Important:** This layer should not depend on Fiber, Gin, Echo, or pure `net/http`.
 
 **Example:**
 
@@ -341,7 +341,7 @@ Request → Middleware 1 → Middleware 2 → Handler → Middleware 2 (after) �
 ```go
 // Authentication middleware
 func AuthMiddleware(tokenService TokenService) fiber.Handler {
-    return func(c *fiber.Ctx) error {
+    return func(c fiber.Ctx) error {
         // 1. Extract token
         token := c.Get("Authorization")
         if token == "" {
@@ -374,7 +374,7 @@ app.Use("/api/protected", AuthMiddleware(tokenService))
 
 ```go
 func RequireRole(roles ...string) fiber.Handler {
-    return func(c *fiber.Ctx) error {
+    return func(c fiber.Ctx) error {
         userRole := c.Locals("role").(string)
 
         for _, role := range roles {
@@ -664,6 +664,16 @@ Good for: Production systems, high scale
 ---
 
 ## 🎓 Learning Progression
+
+### Phase 0: Learn the Backend Runtime First
+
+- Project 00a: Build a JSON API with `net/http`
+- Project 00b: Add `context.Context`, timeouts, config, and error wrapping
+- Project 00c: Use PostgreSQL with `database/sql`, migrations, and transactions
+- Project 00d: Add unit, handler, integration, and benchmark tests
+- Project 00e: Add Docker Compose, structured logs, health checks, and graceful shutdown
+
+The point is to understand the primitives before frameworks hide them. Fiber and Gin become easier to compare when you already know the HTTP lifecycle, cancellation, database boundaries, and test strategy.
 
 ### Phase 1: Learn Patterns in Isolation
 
